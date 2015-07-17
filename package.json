@@ -1,0 +1,22 @@
+{
+  "name": "node-child-process-example",
+  "version": "1.0.0",
+  "description": "Sample project to test creating multiple Node child processes and distribute processing of a task amongst them.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/KalevRK/node-child-process-example.git"
+  },
+  "author": "Kalev Roomann-Kurrik",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KalevRK/node-child-process-example/issues"
+  },
+  "homepage": "https://github.com/KalevRK/node-child-process-example",
+  "devDependencies": {
+    "express": "^4.13.1"
+  }
+}
