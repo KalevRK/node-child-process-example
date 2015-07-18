@@ -11,12 +11,19 @@ var express = require('express');
 var app = express();
 var port = 3000;
 
+// Options for processing
+var options = {
+  numberElements: 1000,
+  useMaxCores: true,
+  numberCores: 4,
+};
+
 // Array of children processes
 var children = [];
 
 // Sample data to have child processes operate on
 var data = [];
-for (var i = 1; i <= 1000; i++) {
+for (var i = 1; i <= options.numberElements; i++) {
   data.push(i);
 }
 
@@ -30,7 +37,7 @@ var sumCopy;
 var childrenFinished = 0;
 
 // Determine the number of cores in the system
-var numCores = require('os').cpus().length;
+var numCores = options.useMaxCores ? require('os').cpus().length : options.numberCores;
 console.log('numCores:', numCores);
 
 // Whenever the client sends a request to get the root directory then create new child processes
@@ -46,7 +53,7 @@ app.get('/', function(req, res) {
     children[i] = childProcess.fork('./worker.js');
     console.log('Forked child', i);
     // Send data to each child process
-    children[i].send(data.slice(0+(i*250),249+(i*250)));
+    children[i].send(data.slice(0+(i*(options.numberElements/numCores)),((options.numberElements/numCores)-1)+(i*(options.numberElements/numCores))));
     // Receive processed data from each child process
     // and combine to send back to client
     children[i].on('message', function(result) {
