@@ -13,8 +13,6 @@ process.on('message', function(data) {
     return sum + value;
   });
   
-  console.log('sum calculated by worker:', result);
-  
   // Send the sum back to the main thread
   process.send(result);
 });

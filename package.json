@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/KalevRK/node-child-process-example",
   "devDependencies": {
+    "body-parser": "^1.13.2",
     "express": "^4.13.1"
   }
 }

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Node Child Process Example</title>
+  </head>
+  <body>
+    <h1>Doing Sumthing Cool with Node Child Processes</h1>
+      <h2>Input Parameters</h2>
+      <form>
+        <label>Number of Elements in Dataset: <input id='numberElements' type='text' placeHolder='1000000'/></label> <br />
+        <label>Number of Cores to Use (max 4): <input id='numberCores' type='text' placeHolder='4'/></label><br />
+        <label>Use Maximum Number of Cores: <input id='useMaxCores' type='checkbox' checked='checked'/></label><br /> 
+        <input type='submit' value='Run' />
+      </form>
+      <br />
+      <h2>Result</h2>
+      <label>Sum: <span id='outputSum'></span></label><br />
+      <label>Time: <span id='outputTime'></span></label><br />
+      <script src='lib/jquery-2.1.4.js'></script>
+      <script src='js/app.js'></script>
+  </body>
+</html>
