@@ -36,6 +36,10 @@ console.log('numCores:', numCores);
 // Whenever the client sends a request to get the root directory then create new child processes
 // and have them perform the required calculations, kill the child processes and return the final result
 app.get('/', function(req, res) {
+
+  // Get time when request was submitted
+  console.time('Process ran with ' + numCores + ' cores in');
+
   // Setup one child process per core
   for (var i = 0; i < numCores; i++) {
     // Create child process for a core and have it run the code in worker.js
@@ -59,6 +63,14 @@ app.get('/', function(req, res) {
         sumCopy = sum;
         sum = 1;
         this.kill();
+
+        // Get time when response is sent
+        console.timeEnd('Process ran with ' + numCores + ' cores in');
+
+        // Calculate time taken to handle request
+        // var elapsed = end - start;
+        // console.log('This process took ' + elapsed + ' milliseconds to run using ' + numCores + ' cores');
+
         res.status(200).send('Sum from the server:' + sumCopy);
       }
       // Kill the child process after it is done processing
