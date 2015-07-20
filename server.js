@@ -33,6 +33,9 @@ var children = [];
 // and have them perform the required calculations, kill the child processes and return the final result
 app.post('/', function(req, res) {
 
+  // Get time when request was submitted
+  var startTime = process.hrtime();
+
   // Overall sum
   var sum = 1;
 
@@ -61,9 +64,6 @@ app.post('/', function(req, res) {
     data.push(i);
   }
 
-  // Get time when request was submitted
-  var startTime = process.hrtime();
-
   // Setup one child process per core
   for (var i = 0; i < numCores; i++) {
     // Create child process for a core and have it run the code in worker.js
@@ -85,12 +85,14 @@ app.post('/', function(req, res) {
 
         // Log time taken to handle request
         var endTime = process.hrtime(startTime);
-        console.log('Process ran with %s cores in %dms', numCores, endTime[1]/1000000);
+        console.log('endTime[0]:', endTime[0]);
+        console.log('endTime[1]:', endTime[1]);
+        console.log('Process ran with %s cores in %dms', numCores, endTime[0]*1000 + ((endTime[1] - (endTime[1] % 1000))/1000000));
 
         // Package up calculated sum and the time taken to do the processing
         var result = {
           sum: sum,
-          time: (endTime[1] - (endTime[1] % 1000))/1000000
+          time: endTime[0]*1000 + ((endTime[1] - (endTime[1] % 1000))/1000000)
         };
 
         // Send result to client
