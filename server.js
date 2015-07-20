@@ -37,7 +37,7 @@ app.post('/', function(req, res) {
   var startTime = process.hrtime();
 
   // Overall sum
-  var sum = 1;
+  var sum = 0;
 
   // Count of how many children have provided results
   var childrenFinished = 0;
@@ -80,13 +80,9 @@ app.post('/', function(req, res) {
       childrenFinished++;
       // If the last child process has finished then provide final sum and clean up
       if(childrenFinished === numCores) {
-        // Kill the child process after it is done processing
-        this.kill();
-
+        
         // Log time taken to handle request
         var endTime = process.hrtime(startTime);
-        console.log('endTime[0]:', endTime[0]);
-        console.log('endTime[1]:', endTime[1]);
         console.log('Process ran with %s cores in %dms', numCores, endTime[0]*1000 + ((endTime[1] - (endTime[1] % 1000))/1000000));
 
         // Package up calculated sum and the time taken to do the processing
