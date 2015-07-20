@@ -21,8 +21,10 @@ app.use(bodyParser.json());
 var options = {
   numberElements: 1000000,
   numberCores: 4,
-  useMaxCores: true
 };
+
+// Number of cores available in system
+var availableCores = require('os').cpus().length;
 
 // Array of children processes
 var children = [];
@@ -46,10 +48,9 @@ app.post('/', function(req, res) {
   // If values were not provided default to the values already set on the options object
   options.numberElements = numElementsInput ? parseInt(numElementsInput) : options.numberElements;
   options.numberCores = numCoresInput ? Math.min(parseInt(numCoresInput), 4) : options.numberCores;
-  options.useMaxCores = maxCoresInput;
 
   // Check whether the program should be run with the maximum number of available cores
-  var numCores = options.useMaxCores === true ? require('os').cpus().length : options.numberCores;
+  var numCores = maxCoresInput === 'true' ? availableCores : options.numberCores;
 
   // Determine the amount of data to send to each core
   var dataSlice = options.numberElements/numCores;
